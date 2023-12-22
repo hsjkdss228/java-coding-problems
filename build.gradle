@@ -13,10 +13,6 @@ dependencies {
     testImplementation 'org.assertj:assertj-core:3.24.2'
 }
 
-application {
-    mainClass = 'java.coding.problems.App'
-}
-
 tasks.named('test') {
     useJUnitPlatform()
 }
