@@ -18,18 +18,25 @@ class Chapter01Test {
     @Test
     void countNumberOfCharacters() {
         String string = "aaabcdd";
-
-        assertThat(test.countNumberOfCharacters1(string)).isEqualTo(Map.of(
+        assertThat(test.countNumberOfCharacters(string)).isEqualTo(Map.of(
                 'a', 3,
                 'b', 1,
                 'c', 1,
                 'd', 2
         ));
-        assertThat(test.countNumberOfCharacters2(string)).isEqualTo(Map.of(
+        assertThat(test.countNumberOfCharactersFunctional(string)).isEqualTo(Map.of(
                 'a', 3L,
                 'b', 1L,
                 'c', 1L,
                 'd', 2L
         ));
+    }
+
+    @Test
+    void findFirstNonRepeatedCharacter() {
+        String string = "aaabcdd";
+        assertThat(test.findFirstNonRepeatedCharacter(string)).isEqualTo('b');
+        assertThat(test.findFirstNonRepeatedCharacterWithLinkedHashMap(string)).isEqualTo("b");
+        assertThat(test.findFirstNonRepeatedCharacterFunctional(string)).isEqualTo("b");
     }
 }

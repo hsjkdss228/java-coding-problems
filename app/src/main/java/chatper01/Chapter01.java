@@ -1,7 +1,10 @@
 package chatper01;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Chapter01 {
@@ -12,7 +15,7 @@ public class Chapter01 {
      * @param string 입력되는 문자열
      * @return 특정 문자 별 문자 개수
      */
-    public Map<Character, Integer> countNumberOfCharacters1(String string) {
+    public Map<Character, Integer> countNumberOfCharacters(String string) {
         Map<Character, Integer> charactersAndCounts = new HashMap<>();
 
         for (char character : string.toCharArray()) {
@@ -22,12 +25,86 @@ public class Chapter01 {
         return charactersAndCounts;
     }
 
-    public Map<Character, Long> countNumberOfCharacters2(String string) {
+    public Map<Character, Long> countNumberOfCharactersFunctional(String string) {
         return string.chars()
                 .mapToObj(character -> (char) character)
                 .collect(Collectors.groupingBy(
                         character -> character,
                         Collectors.counting()
                 ));
+    }
+
+    private static final int EXTENDED_ASCII_CODES = 256;
+
+    private static final int NOT_APPEARED = -1;
+    private static final int REPEATED = -2;
+
+    /**
+     * 002. 반복되지 않는 첫 번째 문자 찾기
+     *
+     * @param string 입력되는 문자열
+     * @return 문자열 내에서 유일한 문자 중 가장 앞에 위치한 문자
+     */
+    public char findFirstNonRepeatedCharacter(String string) {
+        int[] flags = new int[EXTENDED_ASCII_CODES];
+
+        Arrays.fill(flags, -1);
+
+        for (int i = 0; i < string.length(); i += 1) {
+            char character = string.charAt(i);
+
+            if (flags[character] == NOT_APPEARED) {
+                flags[character] = i;
+                continue;
+            }
+
+            flags[character] = REPEATED;
+        }
+
+        int position = Integer.MAX_VALUE;
+
+        for (int index : flags) {
+            if (index >= 0) {
+                position = Math.min(position, index);
+            }
+        }
+
+        return position == Integer.MAX_VALUE ? Character.MIN_VALUE : string.charAt(position);
+    }
+
+    public String findFirstNonRepeatedCharacterWithLinkedHashMap(String string) {
+        Map<String, Integer> charactersAndRepeatCounts = new LinkedHashMap<>();
+
+        for (String character : string.split("")) {
+            charactersAndRepeatCounts.compute(
+                    character,
+                    (key, value) -> value == null ? 1 : value + 1
+            );
+        }
+
+        for (Map.Entry<String, Integer> characterAndRepeatCount
+                : charactersAndRepeatCounts.entrySet()) {
+            if (characterAndRepeatCount.getValue() == 1) {
+                return characterAndRepeatCount.getKey();
+            }
+        }
+
+        return Character.toString(Character.MIN_VALUE);
+    }
+
+    public String findFirstNonRepeatedCharacterFunctional(String string) {
+        Map<String, Long> charactersAndRepeatCounts = Arrays.stream(string.split(""))
+                .collect(Collectors.groupingBy(
+                        Function.identity(),
+                        LinkedHashMap::new,
+                        Collectors.counting()
+                ));
+
+        return charactersAndRepeatCounts.entrySet()
+                .stream()
+                .filter(characterAndRepeatCount -> characterAndRepeatCount.getValue() == 1)
+                .findFirst()
+                .map(Map.Entry::getKey)
+                .orElse(Character.toString(Character.MIN_VALUE));
     }
 }
