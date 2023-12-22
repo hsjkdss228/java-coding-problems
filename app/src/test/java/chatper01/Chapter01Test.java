@@ -39,4 +39,12 @@ class Chapter01Test {
         assertThat(test.findFirstNonRepeatedCharacterWithLinkedHashMap(string)).isEqualTo("b");
         assertThat(test.findFirstNonRepeatedCharacterFunctional(string)).isEqualTo("b");
     }
+
+    @Test
+    void reverse() {
+        String string = "cat banana dog rabbit";
+        assertThat(test.reverseString(string)).isEqualTo("tac ananab god tibbar");
+        assertThat(test.reverseStringFunctional(string)).isEqualTo("tac ananab god tibbar");
+        assertThat(test.reverseStringAndWord(string)).isEqualTo("tibbar god ananab tac");
+    }
 }

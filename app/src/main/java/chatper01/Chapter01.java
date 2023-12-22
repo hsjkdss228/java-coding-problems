@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class Chapter01 {
@@ -106,5 +107,53 @@ public class Chapter01 {
                 .findFirst()
                 .map(Map.Entry::getKey)
                 .orElse(Character.toString(Character.MIN_VALUE));
+    }
+
+    private static final String WHITESPACE = " ";
+
+    /**
+     * 003. 글자와 단어 뒤집기
+     *
+     * @param string 입력되는 문자열
+     * @return 각 단어의 알파벳 순서가 모두 뒤집힌 문자열
+     */
+    public String reverseString(String string) {
+        String[] words = string.split(WHITESPACE);
+
+        StringBuilder reversedStringBuilder = new StringBuilder();
+
+        for (String word : words) {
+            StringBuilder reversedWordBuilder = new StringBuilder();
+
+            for (int i = word.length() - 1; i >= 0; i -= 1) {
+                reversedWordBuilder.append(word.charAt(i));
+            }
+
+            reversedStringBuilder.append(reversedWordBuilder)
+                    .append(WHITESPACE);
+        }
+
+        deleteLastWhitespace(reversedStringBuilder);
+
+        return reversedStringBuilder.toString();
+    }
+
+    private void deleteLastWhitespace(StringBuilder reversedStringBuilder) {
+        int length = reversedStringBuilder.length();
+        reversedStringBuilder.delete(length - 1, length);
+    }
+
+    private static final Pattern PATTERN = Pattern.compile(" +");
+
+    public String reverseStringFunctional(String string) {
+        return PATTERN.splitAsStream(string)
+                .map(word -> new StringBuilder(word)
+                        .reverse())
+                .collect(Collectors.joining(" "));
+    }
+
+    public String reverseStringAndWord(String string) {
+        return new StringBuilder(string).reverse()
+                .toString();
     }
 }

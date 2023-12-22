@@ -58,3 +58,9 @@ Map<T, Long> keysAndCounts = stream.collect(
             Collectors.counting()
         ));
 ```
+
+## 003. 글자와 단어 뒤집기
+
+### `StringBuilder.reverse()`
+
+- StringBuilder 인스턴스에 내포된 문자열을 역순으로 배치
