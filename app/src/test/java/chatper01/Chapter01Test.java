@@ -47,4 +47,20 @@ class Chapter01Test {
         assertThat(test.reverseStringFunctional(string)).isEqualTo("tac ananab god tibbar");
         assertThat(test.reverseStringAndWord(string)).isEqualTo("tibbar god ananab tac");
     }
+
+    @Test
+    void isNumericString() {
+        String numericString = "121235000112583";
+        String nonNumericString = "121235ba12=35n";
+
+        assertThat(test.isNumericString(numericString)).isTrue();
+        assertThat(test.isNumericStringFunctional(numericString)).isTrue();
+        assertThat(test.isNumericStringRegex1(numericString)).isTrue();
+        assertThat(test.isNumericStringRegex2(numericString)).isTrue();
+
+        assertThat(test.isNumericString(nonNumericString)).isFalse();
+        assertThat(test.isNumericStringFunctional(nonNumericString)).isFalse();
+        assertThat(test.isNumericStringRegex1(nonNumericString)).isFalse();
+        assertThat(test.isNumericStringRegex2(nonNumericString)).isFalse();
+    }
 }

@@ -61,6 +61,14 @@ Map<T, Long> keysAndCounts = stream.collect(
 
 ## 003. 글자와 단어 뒤집기
 
+### `Pattern.splitAsStream()`
+
+- 문자열을 정규표현식이 컴파일된 Pattern 객체를 이용해 배열의 각 요소들로 나눈 뒤, 해당 배열을 이용해 Stream 인스턴스를 생성
+
 ### `StringBuilder.reverse()`
 
 - StringBuilder 인스턴스에 내포된 문자열을 역순으로 배치
+
+## 004. 숫자만 포함하는 문자열인지 검사
+
+- Java에서 특정 정규표현식 검증을 위한 `Pattern` 객체는 [생성 비용이 높은 인스턴스](https://github.com/hsjkdss228/dev-book-studies/tree/main/effective-java-3e/notes/chapter2/item6#%EC%83%9D%EC%84%B1-%EB%B9%84%EC%9A%A9%EC%9D%B4-%EB%B9%84%EC%8B%BC-%EA%B0%9D%EC%B2%B4%EC%9D%98-%EC%9E%AC%EC%82%AC%EC%9A%A9)이기 때문에, 자주 사용되는 정규표현식은 상수로 정의한 뒤 사용하면 효과적.

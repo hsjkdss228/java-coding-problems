@@ -143,10 +143,10 @@ public class Chapter01 {
         reversedStringBuilder.delete(length - 1, length);
     }
 
-    private static final Pattern PATTERN = Pattern.compile(" +");
+    private static final Pattern WHITESPACE_PATTERN = Pattern.compile(" +");
 
     public String reverseStringFunctional(String string) {
-        return PATTERN.splitAsStream(string)
+        return WHITESPACE_PATTERN.splitAsStream(string)
                 .map(word -> new StringBuilder(word)
                         .reverse())
                 .collect(Collectors.joining(" "));
@@ -155,5 +155,38 @@ public class Chapter01 {
     public String reverseStringAndWord(String string) {
         return new StringBuilder(string).reverse()
                 .toString();
+    }
+
+    /**
+     * 004. 숫자만 포함하는 문자열인지 검사
+     *
+     * @param string 입력되는 문자열
+     * @return 숫자만 포함된 문자열인지에 대한 여부
+     */
+    public boolean isNumericString(String string) {
+        for (char character : string.toCharArray()) {
+            if (!Character.isDigit(character)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean isNumericStringFunctional(String string) {
+        return string.chars()
+                .allMatch(Character::isDigit);
+    }
+
+    private static final Pattern NUMERIC_PATTERN = Pattern.compile("\\d+");
+    private static final Pattern CONTAINS_NON_NUMERIC_PATTERN = Pattern.compile("(?!\\d+$).+");
+
+    public boolean isNumericStringRegex1(String string) {
+        return NUMERIC_PATTERN.matcher(string)
+                .matches();
+    }
+
+    public boolean isNumericStringRegex2(String string) {
+        return !CONTAINS_NON_NUMERIC_PATTERN.matcher(string)
+                .matches();
     }
 }
