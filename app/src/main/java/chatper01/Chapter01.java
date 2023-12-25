@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -37,7 +38,7 @@ public class Chapter01 {
 
     public Map<String, Long> countNumberOfCharactersWithUnicodeFunctional(String string) {
         return string.codePoints()
-                .mapToObj(character -> String.valueOf(Character.toChars(character)))
+                .mapToObj(codePoint -> String.valueOf(Character.toChars(codePoint)))
                 .collect(Collectors.groupingBy(
                         character -> character,
                         Collectors.counting()
@@ -197,5 +198,52 @@ public class Chapter01 {
     public boolean isNumericStringRegex2(String string) {
         return !CONTAINS_NON_NUMERIC_PATTERN.matcher(string)
                 .matches();
+    }
+
+    private static final Set<Character> VOWELS_CHARACTER = Set.of('a', 'e', 'i', 'o', 'u');
+    private static final Set<String> VOWELS_STRING = Set.of("a", "e", "i", "o", "u");
+
+    /**
+     * 005. 모음과 자음 세기
+     *
+     * @param string 입력되는 문자열
+     * @return Key: 자음/모음, Value: 개수
+     */
+    public Map<String, Long> countVowelAndConsonant(String string) {
+        long vowelCount = 0;
+        long consonantCount = 0;
+
+        for (char character : string.toLowerCase().toCharArray()) {
+            if (VOWELS_CHARACTER.contains(character)) {
+                vowelCount += 1;
+                continue;
+            }
+
+            if (character >= 'a' && character <= 'z') {
+                consonantCount += 1;
+            }
+        }
+
+        return Map.of(
+                "vowel", vowelCount,
+                "consonant", consonantCount
+        );
+    }
+
+    public Map<String, Long> countVowelAndConsonantWithUnicodeFunctional(String string) {
+        Map<Boolean, Long> partitionedAndCounts = string.toLowerCase()
+                .codePoints()
+                .mapToObj(Character::toChars)
+                .filter(chars -> chars.length == 1 && chars[0] >= 'a' && chars[0] <= 'z')
+                .map(String::valueOf)
+                .collect(Collectors.partitioningBy(
+                        VOWELS_STRING::contains,
+                        Collectors.counting()
+                ));
+
+        return Map.of(
+            "vowel", partitionedAndCounts.get(true),
+            "consonant", partitionedAndCounts.get(false)
+        );
     }
 }

@@ -98,3 +98,18 @@ Map<T, Long> keysAndCounts = stream.collect(
 ## 004. 숫자만 포함하는 문자열인지 검사
 
 - Java에서 특정 정규표현식 검증을 위한 `Pattern` 객체는 [생성 비용이 높은 인스턴스](https://github.com/hsjkdss228/dev-book-studies/tree/main/effective-java-3e/notes/chapter2/item6#%EC%83%9D%EC%84%B1-%EB%B9%84%EC%9A%A9%EC%9D%B4-%EB%B9%84%EC%8B%BC-%EA%B0%9D%EC%B2%B4%EC%9D%98-%EC%9E%AC%EC%82%AC%EC%9A%A9)이기 때문에, 자주 사용되는 정규표현식은 상수로 정의한 뒤 사용하면 효과적.
+
+## 005. 모음과 자음 세기
+
+### `Collectors.partitioningBy()`
+
+- Stream의 요소를 `predicate`으로 주어지는 판별 연산에 따라 `Map<Boolean, List<T>>`의 value의 `List<T>`에 각각 파티셔닝
+  - `downstream`이 주어지는 경우, `List<T>`에 대해 추가적인 연산을 수행
+
+```java
+Map<Boolean, Long> predicatedAndCounts = stream.collect(
+        Collectors.partitioningBy(
+            value -> value.equals("abcde"),
+            Collectors.counting()
+        ));
+```

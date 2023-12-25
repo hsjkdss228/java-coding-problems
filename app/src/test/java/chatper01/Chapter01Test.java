@@ -73,4 +73,17 @@ class Chapter01Test {
         assertThat(test.isNumericStringRegex1(nonNumericString)).isFalse();
         assertThat(test.isNumericStringRegex2(nonNumericString)).isFalse();
     }
+
+    @Test
+    void countVowelAndConsonant() {
+        String string = "I have a pen. 이게 무슨 소린지 모르겠다고? 난감하네요 😅";
+
+        Map<String, Long> typesAndCounts = Map.of(
+                "vowel", 5L,
+                "consonant", 4L
+        );
+
+        assertThat(test.countVowelAndConsonant(string)).isEqualTo(typesAndCounts);
+        assertThat(test.countVowelAndConsonantWithUnicodeFunctional(string)).isEqualTo(typesAndCounts);
+    }
 }
