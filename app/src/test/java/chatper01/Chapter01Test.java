@@ -30,6 +30,16 @@ class Chapter01Test {
                 'c', 1L,
                 'd', 2L
         ));
+
+        String stringWithEmoji = "aaabcdd😂";
+        assertThat(test.countNumberOfCharactersWithUnicodeFunctional(stringWithEmoji))
+                .isEqualTo(Map.of(
+                        "a", 3L,
+                        "b", 1L,
+                        "c", 1L,
+                        "d", 2L,
+                        "😂", 1L
+                ));
     }
 
     @Test

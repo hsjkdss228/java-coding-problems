@@ -42,6 +42,32 @@ Map<T, Long> keysAndCounts = stream.collect(
         ));
 ```
 
+### Java에서 유니코드 문자 표현하기
+
+- Java에서 단일 `char` 타입은 65536(16비트, 0xFFFF)보다 작은 숫자로 나타내는 문자를 표현할 수 있음
+- 이보다 큰 숫자로 나타내는 문자들은 32비트로 나타내지며, 일반적으로 UTF-32 인코딩 스키마를 통해 표현될 수 있음
+- **Java는 UTF-32를 지원하지 않으므로**, 해당 문자들을 16비트 상위 대리(High Surrogate), 16비트 하위 대리(Low Surrogate)의 쌍인 _대리 쌍(Surrogate Pair)_ 으로 나타냄
+
+```java
+String string = "😂🥲🥹🤔";
+  
+string.length();      // 8
+  
+System.out.print("😂🥲🥹🤔".charAt(0));     // 해당 문자를 나타내는 대리 쌍 중 상위 대리만 추출되므로 😂 이모지가 출력되지 않음
+  
+for (int i = 0; i < string.length(); i += 1) {
+    int codePoint = string.codePointAt(i);
+    if (Character.charCount(codePoint) == 2) {      // 대리 쌍인 문자일 경우 다음 문자 조회를 위해 index를 2씩 증가
+        i += 1;
+    }
+    char[] chars = Character.toChars(codePoint);
+    String character = String.valueOf(chars);
+      
+    System.out.print(chars);            // 대리 쌍이 모두 포함되었으므로 각 이모지 출력
+    System.out.print(character);        // 대리 쌍이 모두 포함되었으므로 각 이모지 출력
+}
+```
+
 ## 002. 반복되지 않는 첫 번째 문자 찾기
 
 ### `Function.identity()`

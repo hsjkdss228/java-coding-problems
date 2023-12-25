@@ -35,6 +35,15 @@ public class Chapter01 {
                 ));
     }
 
+    public Map<String, Long> countNumberOfCharactersWithUnicodeFunctional(String string) {
+        return string.codePoints()
+                .mapToObj(character -> String.valueOf(Character.toChars(character)))
+                .collect(Collectors.groupingBy(
+                        character -> character,
+                        Collectors.counting()
+                ));
+    }
+
     private static final int EXTENDED_ASCII_CODES = 256;
 
     private static final int NOT_APPEARED = -1;
