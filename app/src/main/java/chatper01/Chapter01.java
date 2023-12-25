@@ -246,4 +246,22 @@ public class Chapter01 {
             "consonant", partitionedAndCounts.get(false)
         );
     }
+
+    /**
+     * 006. 문자 빈도수 세기
+     *
+     * @param string 입력되는 문자열
+     * @param target 대상 문자
+     * @return 문자열 내 대상 문자의 빈도수
+     */
+    public long countTargetCharacter(String string, String target) {
+        return string.length() - string.replaceAll(target, "").length();
+    }
+
+    public long countTargetCharacterWithUnicode(String string, String target) {
+        return string.codePoints()
+                .mapToObj(codePoint -> String.valueOf(Character.toChars(codePoint)))
+                .filter(character -> character.equals(target))
+                .count();
+    }
 }

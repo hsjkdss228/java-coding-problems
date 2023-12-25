@@ -86,4 +86,14 @@ class Chapter01Test {
         assertThat(test.countVowelAndConsonant(string)).isEqualTo(typesAndCounts);
         assertThat(test.countVowelAndConsonantWithUnicodeFunctional(string)).isEqualTo(typesAndCounts);
     }
+
+    @Test
+    void countTargetCharacter() {
+        String string = "I have a pan. 이게 무슨 소린지 모르겠다고? 난감하네요";
+        String stringWithUnicode = "I have a pan. 이게 무슨 소린지 모르겠다고? 난감하네요 😅😅";
+
+        assertThat(test.countTargetCharacter(string, "a")).isEqualTo(3);
+        assertThat(test.countTargetCharacterWithUnicode(stringWithUnicode, "a")).isEqualTo(3);
+        assertThat(test.countTargetCharacterWithUnicode(stringWithUnicode, "😅")).isEqualTo(2);
+    }
 }

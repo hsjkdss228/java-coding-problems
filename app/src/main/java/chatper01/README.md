@@ -113,3 +113,7 @@ Map<Boolean, Long> predicatedAndCounts = stream.collect(
             Collectors.counting()
         ));
 ```
+
+## 006. 문자 빈도수 세기
+
+- [Java에서 유니코드 문자 표현하기](#java에서-유니코드-문자-표현하기) 참조
