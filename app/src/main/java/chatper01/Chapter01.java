@@ -264,4 +264,46 @@ public class Chapter01 {
                 .filter(character -> character.equals(target))
                 .count();
     }
+
+    /**
+     * 007. 문자열을 int, long, float, double로 변환
+     *
+     * @param string 입력되는 숫자 형식의 문자열
+     * @return 대상 타입으로 변환된 숫자
+     */
+    public int toInt(String string) {
+        return Integer.parseInt(string);
+    }
+
+    public long toLong(String string) {
+        return Long.parseLong(string);
+    }
+
+    public float toFloat(String string) {
+        return Float.parseFloat(string);
+    }
+
+    public double toDouble(String string) {
+        return Double.parseDouble(string);
+    }
+
+    public Number toNumeric(String string, Class<? extends Number> classType) {
+        if (classType.equals(Integer.class)) {
+            return Integer.valueOf(string);
+        }
+
+        if (classType.equals(Long.class)) {
+            return Long.valueOf(string);
+        }
+
+        if (classType.equals(Float.class)) {
+            return Float.valueOf(string);
+        }
+
+        if (classType.equals(Double.class)) {
+            return Double.valueOf(string);
+        }
+
+        throw new NumberFormatException();
+    }
 }

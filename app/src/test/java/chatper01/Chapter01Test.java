@@ -1,6 +1,7 @@
 package chatper01;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
@@ -84,7 +85,8 @@ class Chapter01Test {
         );
 
         assertThat(test.countVowelAndConsonant(string)).isEqualTo(typesAndCounts);
-        assertThat(test.countVowelAndConsonantWithUnicodeFunctional(string)).isEqualTo(typesAndCounts);
+        assertThat(test.countVowelAndConsonantWithUnicodeFunctional(string))
+                .isEqualTo(typesAndCounts);
     }
 
     @Test
@@ -95,5 +97,22 @@ class Chapter01Test {
         assertThat(test.countTargetCharacter(string, "a")).isEqualTo(3);
         assertThat(test.countTargetCharacterWithUnicode(stringWithUnicode, "a")).isEqualTo(3);
         assertThat(test.countTargetCharacterWithUnicode(stringWithUnicode, "😅")).isEqualTo(2);
+    }
+
+    @Test
+    void toNumeric() {
+        assertThat(test.toInt("133224")).isEqualTo(133224);
+        assertThat(test.toLong("13322499944217")).isEqualTo(13322499944217L);
+        assertThat(test.toFloat("133224.112231")).isEqualTo(133224.112231F);
+        assertThat(test.toDouble("133224.112")).isEqualTo(133224.112D);
+        assertThrows(NumberFormatException.class,
+                () -> test.toInt("1313unyo'o;jp89;ll"));
+
+        assertThat(test.toNumeric("133224", Integer.class)).isEqualTo(133224);
+        assertThat(test.toNumeric("13322499944217", Long.class)).isEqualTo(13322499944217L);
+        assertThat(test.toNumeric("133224.112231", Float.class)).isEqualTo(133224.112231F);
+        assertThat(test.toNumeric("133224.112", Double.class)).isEqualTo(133224.112D);
+        assertThrows(NumberFormatException.class,
+                () -> test.toNumeric("dklylbfalwieuhxrlq", Long.class));
     }
 }

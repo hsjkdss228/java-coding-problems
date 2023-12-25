@@ -117,3 +117,18 @@ Map<Boolean, Long> predicatedAndCounts = stream.collect(
 ## 006. 문자 빈도수 세기
 
 - [Java에서 유니코드 문자 표현하기](#java에서-유니코드-문자-표현하기) 참조
+
+## 007. 문자열을 int, long, float, double로 변환
+
+- 다음과 같이 메서드의 파라미터 타입을 한정할 수 있음
+  - 아래 예시에서는 `classType`에 `Number`를 상속받는 타입만 전달 가능
+
+```java
+public Number toNumeric(String string, Class<? extends Number> classType) {
+    if (classType.equals(Integer.class)) {
+        // ...    
+    }
+    
+    // ...
+}
+```
