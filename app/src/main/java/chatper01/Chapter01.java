@@ -2,14 +2,16 @@ package chatper01;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.StringJoiner;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.stream.IntStream;
 import java.util.stream.StreamSupport;
 
 public class Chapter01 {
@@ -366,5 +368,60 @@ public class Chapter01 {
     ) {
         return StreamSupport.stream(strings.spliterator(), false)
                 .collect(Collectors.joining(delimiter));
+    }
+
+    /**
+     * 010. 모든 순열 생성
+     *
+     * @param string 주어지는 문자열
+     * @return 주어지는 문자열의 각 단어를 서로 다르게 조합한 순열의 모든 경우의 수
+     */
+    public Set<String> permute(String string) {
+        Set<String> permutations = new HashSet<>();
+
+        permute(permutations, "", string);
+
+        return permutations;
+    }
+
+    private void permute(Set<String> permutations, String prefix, String string) {
+        int length = string.length();
+
+        if (length == 0) {
+            permutations.add(prefix);
+            return;
+        }
+
+        for (int i = 0; i < length; i += 1) {
+            String nextPrefix = prefix + string.charAt(i);
+            String remainingString
+                    = string.substring(0, i) + string.substring(i + 1, length);
+            permute(permutations, nextPrefix, remainingString);
+        }
+    }
+
+    public Set<String> permuteFunctional(String string) {
+        Set<String> permutations = new HashSet<>();
+
+        permuteFunctional(permutations, "", string);
+
+        return permutations;
+    }
+
+    private void permuteFunctional(Set<String> permutations, String prefix, String string) {
+        int length = string.length();
+
+        if (length == 0) {
+            permutations.add(prefix);
+            return;
+        }
+
+        IntStream.range(0, length)
+                .forEach(index -> {
+                    String nextPrefix = prefix + string.charAt(index);
+                    String remainingString
+                            = string.substring(0, index) + string.substring(index + 1, length);
+                    permuteFunctional(permutations, nextPrefix, remainingString);
+                });
     }
 }

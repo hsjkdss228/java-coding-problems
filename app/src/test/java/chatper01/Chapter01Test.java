@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -159,5 +160,16 @@ class Chapter01Test {
                         "rains from above!!!"
                 )
         )).isEqualTo("Hi;there;Justice;rains from above!!!");
+    }
+
+    @Test
+    void permute() {
+        String string = "ABC";
+        assertThat(test.permute(string)).isEqualTo(Set.of(
+                "ABC", "ACB", "BCA", "BAC", "CAB", "CBA"
+        ));
+        assertThat(test.permuteFunctional(string)).isEqualTo(Set.of(
+                "ABC", "ACB", "BCA", "BAC", "CAB", "CBA"
+        ));
     }
 }
