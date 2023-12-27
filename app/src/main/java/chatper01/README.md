@@ -137,3 +137,87 @@ public Number toNumeric(String string, Class<? extends Number> classType) {
 
 - 정규표현식에서 `\s`
   - 모든 공백 문자를 지칭 (줄 개행, 탭, 띄어쓰기 등)
+
+## 009. 구분자로 여러 문자열 합치기
+
+### 문자열 합 연산의 문제점
+
+- 많은 수의 문자열들을 직접 합 연산하거나 반복문 내에서 문자열들을 합 연산하는 과정에서 생성되는 모든 문자열들을 인스턴스로 Heap에 저장하기 때문에, 연산 속도가 저하되고 메모리 낭비를 가져오는 원인이 될 수 있음.
+
+```java
+String string = "";
+
+for (int i = 0; i <= Integer.MAX_VALUE; i += 1) {
+    string += "a";
+}
+
+// 다음의 모든 문자열들을 Heap에 저장
+// "a", "aa", "aaa", "aaaa", ...
+```
+
+### `String.join()`
+
+- 인자로 전달되는 구분자를 이용해 같이 전달되는 `String` 인스턴스들을 합친 새로운 `String` 인스턴스를 생성
+- 내부적으로 중간 문자열들을 `String` 인스턴스로 생성하기 때문에 문자열 합 연산이 갖는 문제를 동일하게 공유 
+
+```java
+String string = String.join(", ", "Hello", "world!");
+
+// Hello, world!
+```
+
+### `StringBuilder`
+
+- `String` 인스턴스를 생성하기 위한 Builder의 역할을 하는 클래스 
+- 인스턴스의 메서드를 호출해 원하는 index에 문자열을 삽입, 수정하거나 삭제
+  - 중간 문자열들은 `byte[]` 배열에 저장되며, `toString()`을 호출하는 시점에 `String` 인스턴스를 생성
+
+```java
+String string = new StringBuilder()
+        .append("Hello")
+        .append(", ")
+        .append("world!")
+        .delete(1, 4)
+        .toString();
+
+// Ho, world!
+```
+
+### `StringJoiner`
+
+- `StringBuilder`와 유사하나, 인스턴스 생성 시 구분자(필수), 접두사, 접미사를 전달
+  - 문자열 삽입만 가능.
+  - 중간 문자열 수정, 삭제는 지원하지 않음
+- `StringBuilder`와의 차이점
+  - `StringBuilder`는 중간 문자열을 가변적으로 수정할 수 있음
+  - `StringJoiner`는 여러 문자열들을 구분자, 접두사, 접미사를 기준으로 연결하기 위한 목적으로 주로 사용
+
+```java
+String string = new StringJoiner(", ", "", "!")
+        .add("Hello")
+        .add("world")
+        .toString();
+
+// Hello, world!
+```
+### `StreamSupport`
+
+- 저수준의 데이터 집합 소스를 이용하여 `Stream` 인스턴스 생성을 지원하는 클래스
+
+### `Spliterator`
+
+- 컬렉션, 배열 등 '분할 가능한' 소스의 요소들을 탐색하고 분할하기 위한 클래스
+  - 순차적으로 혹은 병렬적으로 작업을 수행할 수 있음
+- `StreamSupport.stream()` 팩토리 메서드에 인스턴스를 전달해 `Stream` 인스턴스를 생성할 수 있음
+
+```java
+Iterable<? extends CharSequence> strings = List.of("a", "b", "c", "d", "e");
+
+Stream<String> stream = StreamSupport.stream(strings.spliterator(), false);
+
+// Stream.of("a", "b", "c", "d", "e");
+```
+
+### `Collectors.joining()`
+
+- `Stream` 인스턴스의 요소들을 인자로 전달되는 구분자, 접두사, 접미사를 이용해 연결한 문자열을 생성

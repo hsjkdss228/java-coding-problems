@@ -3,6 +3,7 @@ package chatper01;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -121,5 +122,42 @@ class Chapter01Test {
         String string = "asdlkagwekutiya    nsjtvaycl\nsdyhgkayujweytovahiw\teuhalwke";
         assertThat(test.removeWhitespaces(string))
                 .isEqualTo("asdlkagwekutiyansjtvayclsdyhgkayujweytovahiweuhalwke");
+    }
+
+    @Test
+    void joinByDelimiter() {
+        char delimiter = ';';
+
+        assertThat(test.joinByDelimiterWithJoin(String.valueOf(delimiter),
+                "Hi",
+                "there",
+                "Justice",
+                "rains from above!!!"
+        )).isEqualTo("Hi;there;Justice;rains from above!!!");
+
+        assertThat(test.joinByDelimiterWithStringBuilder(delimiter,
+                "Hi",
+                "there",
+                "Justice",
+                "rains from above!!!"
+        )).isEqualTo("Hi;there;Justice;rains from above!!!");
+
+        assertThat(test.joinByDelimiterWithStringJoiner(String.valueOf(delimiter),
+                List.of(
+                        "Hi",
+                        "there",
+                        "Justice",
+                        "rains from above!!!"
+                )
+        )).isEqualTo("Hi;there;Justice;rains from above!!!");
+
+        assertThat(test.joinByDelimiterWithJoining(String.valueOf(delimiter),
+                List.of(
+                        "Hi",
+                        "there",
+                        "Justice",
+                        "rains from above!!!"
+                )
+        )).isEqualTo("Hi;there;Justice;rains from above!!!");
     }
 }

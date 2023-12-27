@@ -5,9 +5,12 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.StringJoiner;
 import java.util.function.Function;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 public class Chapter01 {
 
@@ -242,8 +245,8 @@ public class Chapter01 {
                 ));
 
         return Map.of(
-            "vowel", partitionedAndCounts.get(true),
-            "consonant", partitionedAndCounts.get(false)
+                "vowel", partitionedAndCounts.get(true),
+                "consonant", partitionedAndCounts.get(false)
         );
     }
 
@@ -315,5 +318,53 @@ public class Chapter01 {
      */
     public String removeWhitespaces(String string) {
         return string.replaceAll("\\s", "");
+    }
+
+    /**
+     * 009. 구분자로 여러 문자열 합치기
+     *
+     * @param delimiter 구분자
+     * @param strings   주어지는 문자열들
+     * @return 구분자를 이용해 합쳐진 문자들
+     */
+    public String joinByDelimiterWithJoin(
+            String delimiter,
+            String... strings
+    ) {
+        return String.join(delimiter, strings);
+    }
+
+    public String joinByDelimiterWithStringBuilder(
+            char delimiter,
+            String... strings
+    ) {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for (String string : strings) {
+            stringBuilder.append(string).append(delimiter);
+        }
+
+        stringBuilder.delete(stringBuilder.length() - 1, stringBuilder.length());
+
+        return stringBuilder.toString();
+    }
+
+    public String joinByDelimiterWithStringJoiner(
+            String delimiter,
+            Iterable<? extends CharSequence> strings
+    ) {
+        StringJoiner stringJoiner = new StringJoiner(delimiter);
+
+        strings.forEach(stringJoiner::add);
+
+        return stringJoiner.toString();
+    }
+
+    public String joinByDelimiterWithJoining(
+            String delimiter,
+            Iterable<? extends CharSequence> strings
+    ) {
+        return StreamSupport.stream(strings.spliterator(), false)
+                .collect(Collectors.joining(delimiter));
     }
 }
