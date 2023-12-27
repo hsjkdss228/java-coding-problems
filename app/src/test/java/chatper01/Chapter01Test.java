@@ -115,4 +115,11 @@ class Chapter01Test {
         assertThrows(NumberFormatException.class,
                 () -> test.toNumeric("dklylbfalwieuhxrlq", Long.class));
     }
+
+    @Test
+    void removeWhitespaces() {
+        String string = "asdlkagwekutiya    nsjtvaycl\nsdyhgkayujweytovahiw\teuhalwke";
+        assertThat(test.removeWhitespaces(string))
+                .isEqualTo("asdlkagwekutiyansjtvayclsdyhgkayujweytovahiweuhalwke");
+    }
 }

@@ -306,4 +306,14 @@ public class Chapter01 {
 
         throw new NumberFormatException();
     }
+
+    /**
+     * 008. 문자열에서 여백 제거
+     *
+     * @param string 입력되는 문자열
+     * @return 여백이 제거된 문자열
+     */
+    public String removeWhitespaces(String string) {
+        return string.replaceAll("\\s", "");
+    }
 }

@@ -132,3 +132,8 @@ public Number toNumeric(String string, Class<? extends Number> classType) {
     // ...
 }
 ```
+
+## 008. 문자열에서 여백 제거
+
+- 정규표현식에서 `\s`
+  - 모든 공백 문자를 지칭 (줄 개행, 탭, 띄어쓰기 등)
