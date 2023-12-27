@@ -32,4 +32,18 @@ public class Chapter02 {
             throw new NullPointerException();
         }
     }
+
+    /**
+     * 041. null 참조 검사와 맞춤형 NullPointerException 던지기
+     *
+     * @param string 전달되는 문자열
+     * @return 전달되는 문자열이 null이 아닐 경우 전달되는 문자열을 그대로 반환, null인 경우 정의된 에러 메시지를 반환
+     */
+    public String checkNull2(String string) {
+        try {
+            return Objects.requireNonNull(string, "전달된 문자열이 null입니다.");
+        } catch (Exception exception) {
+            return exception.getMessage();
+        }
+    }
 }

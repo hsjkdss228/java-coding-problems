@@ -10,3 +10,9 @@ boolean containsNull = Stream.of("a", "bbb", null, "d")
 
 // true
 ```
+
+## 041. null 참조 검사와 맞춤형 NullPointerException 던지기
+
+### `Objects.requireNonNull()`
+
+- 첫 번째 인자로 주어진 참조가 `null`인 경우 `NullPointerException`을 throw, 그렇지 않은 경우 해당 참조를 반환
